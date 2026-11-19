@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "ayat-battle",
+  "name": "gameelkisai",
   "main": "src/worker.js",
   "compatibility_date": "2026-01-01",
   // Seluruh file statis (html/js/css/gambar) dilayani dari root proyek.
