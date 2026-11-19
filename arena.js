@@ -117,6 +117,7 @@ window.Arena = (() => {
       this.pLabel.textContent = q.label;
       if (!this.ghost && q.hint?.seg && window.Snip) Snip.resolve(q.hint.seg).catch(() => {});   // siapkan potongan lebih awal
       if (this.listen) this.listen.hidden = !(q.hint || q.playStart || (q.playEnd && !q.write));
+      if (q.playStart && !this.ghost) play(q.playStart, this, true);   // audio di awal soal (level Mudah/Sedang)
       if (q.promptHtml) this.pText.innerHTML = q.promptHtml;          // tajwid: huruf yang ditanyakan diberi warna
       else this.pText.textContent = q.prompt || "Susun potongan ayat sesuai urutan";
       this.pText.className = q.promptClass || (q.prompt ? "ar" : "");
@@ -223,7 +224,6 @@ window.Arena = (() => {
       this.cards.forEach(c => c.el.classList.add("pop"));
       this.streak = 0;
       this.goNext(delay);
-      play(this.q.playEnd, this, true);
     }
     correct(c, s){
       this.fill(s); c.done = true; c.el.classList.add("pop");
@@ -252,7 +252,7 @@ window.Arena = (() => {
           setTimeout(() => k.remove(), 1100);
         } else Sfx.correct();
         if (opt.control === "shoot" && !done){ const n = this.slots.find(x => !x.done); if (n) n.el.classList.add("next"); }
-        if (done){ play(this.q.playEnd, this, true); this.confetti(); }
+        if (done) this.confetti();
       });
     }
     wrong(c){ Sfx.wrong(); c.el.classList.remove("wrong"); void c.el.offsetWidth; c.el.classList.add("wrong"); this.streak = 0; c.vy = 3; }

@@ -132,13 +132,11 @@ window.MODES = [
 // Materi tajwid dasar
 window.TAJ_MATERI = [
   { id:"nun",     icon:"i-tajwid", name:"Nun sukun & tanwin", desc:"Izhar, idgham, iqlab, ikhfa" },
-  { id:"mim",     icon:"i-tajwid", name:"Mim sukun",          desc:"Ikhfa syafawi, idgham mimi, izhar syafawi" },
   { id:"tasydid", icon:"i-tajwid", name:"Tasydid",            desc:"Nun dan mim bertasydid (ghunnah)" },
-  { id:"lam",     icon:"i-tajwid", name:"Alif Lam",           desc:"Qamariyah (izhar) dan syamsiyah (idgham)" },
-  { id:"mad",     icon:"i-tajwid", name:"Mad",                desc:"Thabi'i, muttasil, munfasil, 'aridh lissukun, lazim" },
-  { id:"qalqalah", icon:"i-tajwid", name:"Qalqalah",          desc:"Huruf ق ط ب ج د yang bersukun" },
-  { id:"tafkhim", icon:"i-tajwid", name:"Tafkhim & tarqiq",   desc:"Ra dan lam lafzul jalalah: tebal atau tipis" },
+  { id:"mim",     icon:"i-tajwid", name:"Mim sukun",          desc:"Ikhfa syafawi, idgham mimi, izhar syafawi" },
+  { id:"lam",     icon:"i-tajwid", name:"Alif Lam (ta'rif)",  desc:"Qamariyah (izhar) dan syamsiyah (idgham)" },
   { id:"sejenis", icon:"i-tajwid", name:"Idgham sejenis",     desc:"Mutamatsilain, mutajanisain, mutaqaribain" },
+  { id:"mad",     icon:"i-tajwid", name:"Mad",                desc:"Asli, muttasil, munfasil, 'aridh, badal, lazim" },
   { id:"campur",  icon:"i-tajwid", name:"Campuran",           desc:"Semua hukum di atas" }
 ];
 

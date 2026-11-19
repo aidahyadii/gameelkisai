@@ -1,7 +1,7 @@
 /* Soal tajwid dasar. Hukum dideteksi otomatis dari teks Utsmani (API Quran.com), tidak diketik manual.
    Prinsip: PRESISI di atas jumlah. Kasus yang meragukan dilewati, bukan ditebak.
    Cakupan: nun sukun/tanwin, mim sukun, nun/mim bertasydid, mad (thabi'i, muttasil, munfasil, 'aridh),
-   idgham mutamatsilain, mutajanisain, mutaqaribain, qalqalah, mad lazim kalimi. */
+   idgham mutamatsilain, mutajanisain, mutaqaribain, mad lazim kalimi, mad badal. */
 window.Tajwid = (() => {
   const shuffle = a => Fresh.shuffle(a);
   const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -37,8 +37,6 @@ window.Tajwid = (() => {
   const isHamza = u => norm(u) === "ء";
   const hasShadda = u => u.m.includes(SHADDA);
   const hasVowel  = u => VOWEL.test(u.m) || TANWIN.test(u.m);
-  const TEBAL = /[ًࣰٌࣱَؘُؙ]/, TIPIS = /[ٍࣲِؚ]/;   // fathah/dammah (tebal), kasrah (tipis)
-  const vowelKind = u => TIPIS.test(u.m) ? "kasra" : TEBAL.test(u.m) ? "tebal" : null;
   const isWasl = u => u.ch === "\u0671";
   const isPlainAlif = u => u.ch === "ا" && norm(u) !== "ء";
   const MADLET = "اويىی";
@@ -60,11 +58,7 @@ window.Tajwid = (() => {
     mad_munfasil:      { name:"Mad Jaiz Munfasil",    why:"Mad di akhir kata, hamzah di awal kata berikutnya: 2, 4, atau 5 harakat." },
     mad_aridh:         { name:"Mad 'Aridh Lissukun",  why:"Mad sebelum huruf akhir yang disukunkan karena berhenti: 2, 4, atau 6 harakat." },
     mad_lazim:         { name:"Mad Lazim Kalimi",     why:"Mad bertemu huruf bertasydid atau bersukun dalam satu kata: dibaca 6 harakat." },
-    qalqalah:          { name:"Qalqalah",             why:"Huruf ق ط ب ج د yang bersukun dipantulkan bunyinya: sughra di tengah kata, kubra saat berhenti." },
-    ra_tafkhim:        { name:"Ra Tebal (Tafkhim)",   why:"Ra berharakat fathah atau dammah: dibaca tebal." },
-    ra_tarqiq:         { name:"Ra Tipis (Tarqiq)",    why:"Ra berharakat kasrah: dibaca tipis." },
-    lam_tafkhim:       { name:"Lam Lafzul Jalalah Tebal", why:"Lam pada ٱللَّه setelah fathah atau dammah: dibaca tebal." },
-    lam_tarqiq:        { name:"Lam Lafzul Jalalah Tipis", why:"Lam pada ٱللَّه setelah kasrah: dibaca tipis." },
+    mad_badal:         { name:"Mad Badal",           why:"Hamzah bertemu huruf mad setelahnya dalam satu kata (آمَنُوا, إِيمَانًا): dibaca 2 harakat." },
     mutamatsilain:     { name:"Idgham Mutamatsilain", why:"Dua huruf yang sama, huruf pertama sukun: dilebur." },
     mutajanisain:      { name:"Idgham Mutajanisain",  why:"Dua huruf satu makhraj beda sifat (ت-د, ت-ط, ث-ذ, ذ-ظ, ب-م): dilebur." },
     mutaqaribain:      { name:"Idgham Mutaqaribain",  why:"Dua huruf berdekatan makhraj dan sifat (ل-ر, ق-ك): dilebur." },
@@ -75,11 +69,9 @@ window.Tajwid = (() => {
     nun:     ["izhar", "idgham_bighunnah", "idgham_bilaghunnah", "iqlab", "ikhfa"],
     mim:     ["ikhfa_syafawi", "idgham_mimi", "izhar_syafawi"],
     tasydid: ["nun_tasydid", "mim_tasydid"],
-    mad:     ["mad_thabii", "mad_muttasil", "mad_munfasil", "mad_aridh", "mad_lazim"],
+    mad:     ["mad_thabii", "mad_muttasil", "mad_munfasil", "mad_aridh", "mad_lazim", "mad_badal"],
     sejenis: ["mutamatsilain", "mutajanisain", "mutaqaribain"],
-    lam:     ["lam_qamariyah", "lam_syamsiyah"],
-    qalqalah: ["qalqalah"],
-    tafkhim:  ["ra_tafkhim", "ra_tarqiq", "lam_tafkhim", "lam_tarqiq"]
+    lam:     ["lam_qamariyah", "lam_syamsiyah"]
   };
   FAMILIES.campur = Object.values(FAMILIES).flat();
   const CONF = {   // hukum yang sering tertukar (untuk pengecoh level Sulit)
@@ -90,8 +82,7 @@ window.Tajwid = (() => {
     mad_thabii:["mad_aridh","mad_muttasil"], mad_muttasil:["mad_munfasil","mad_thabii"], mad_munfasil:["mad_muttasil","mad_thabii"], mad_aridh:["mad_thabii","mad_muttasil"],
     lam_qamariyah:["lam_syamsiyah","izhar"], lam_syamsiyah:["lam_qamariyah","idgham_bilaghunnah"],
     mutamatsilain:["mutajanisain","mutaqaribain"], mutajanisain:["mutamatsilain","mutaqaribain"], mutaqaribain:["mutajanisain","mutamatsilain"],
-    mad_lazim:["mad_muttasil","mad_thabii"], qalqalah:["mutajanisain","idgham_mimi"],
-    ra_tafkhim:["ra_tarqiq"], ra_tarqiq:["ra_tafkhim"], lam_tafkhim:["lam_tarqiq"], lam_tarqiq:["lam_tafkhim"]
+    mad_lazim:["mad_muttasil","mad_thabii"], mad_badal:["mad_muttasil","mad_thabii"]
   };
 
   const IZHAR = "ءهعحغخ", BIGH = "ينمو", BILA = "لر", IKHFA = "تثجدذزسشصضطظفقك";
@@ -184,17 +175,13 @@ window.Tajwid = (() => {
           if (!fromIdgham && !syamsiyah) add(u.ch === "ن" ? "nun_tasydid" : "mim_tasydid", [[w, new Set([ui])]]);
         }
 
-        // ---- ra: tebal (fathah/dammah) atau tipis (kasrah); ra bersukun dilewati ----
-        if (u.ch === "ر"){
-          const k = vowelKind(u);
-          if (k) add(k === "kasra" ? "ra_tarqiq" : "ra_tafkhim", [[w, new Set([ui])]]);
-        }
-
-        // ---- qalqalah: ق ط ب ج د bersukun (kecuali bertemu huruf sama atau idgham sejenis) ----
-        if ("قطبجد".includes(norm(u)) && SUKUN.test(u.m) && !hasShadda(u)){
-          const nxt = ui < last ? U[ui + 1] : (lead(w, wi) || {}).u;
-          const pair = nxt ? norm(u) + norm(nxt) : "";
-          if (!nxt || (norm(nxt) !== norm(u) && !TAJANUS.has(pair) && !TAQARUB.has(pair))) add("qalqalah", [[w, new Set([ui])]]);
+        // ---- mad badal: hamzah diikuti huruf mad dalam satu kata (آمَنُوا, إِيمَانًا) ----
+        if (ui === 0 && u.ch === "آ") add("mad_badal", [[w, new Set([0])]]);
+        else if (isHamza(u) && ui < last){
+          const nx = U[ui + 1];
+          if (!hasVowel(nx) && !hasShadda(nx) && !SUKUN.test(nx.m) &&
+              ((nx.ch === "ا" && FATHA.test(u.m)) || (nx.ch === "و" && DAMMA.test(u.m)) || ((nx.ch === "ي" || nx.ch === "ى") && KASRA.test(u.m))))
+            add("mad_badal", [[w, new Set([ui, ui + 1])]]);
         }
 
         // ---- mad ----
@@ -225,19 +212,6 @@ window.Tajwid = (() => {
           }
         }
       });
-
-      // ---- lam lafzul jalalah: tebal setelah fathah/dammah, tipis setelah kasrah ----
-      const jl = U.findIndex((u, j) => j >= 1 && u.ch === "ل" && hasShadda(u) && U[j + 1] && U[j + 1].ch === "ه" && U[j - 1].ch === "ل");
-      if (jl >= 0){
-        let pu = null, pw = null;                           // huruf vokal sebelum lafzul jalalah
-        if (jl >= 2 && isWasl(U[jl - 2])){ if (wi > 0){ pw = words[wi - 1]; pu = pw.units[pw.units.length - 1]; } }
-        else pu = U[jl - 1];                                // "لِلَّه": vokal ada pada ل sebelumnya
-        const kind = pu && vowelKind(pu);
-        if (kind){
-          const parts = pw ? [[pw, new Set([pw.units.length - 1])], [w, new Set([jl])]] : [[w, new Set([jl - 1, jl])]];
-          add(kind === "kasra" ? "lam_tarqiq" : "lam_tafkhim", parts);
-        }
-      }
 
       // ---- alif lam: qamariyah (izhar) dan syamsiyah (idgham) ----
       const k = U.findIndex(isWasl);
@@ -335,6 +309,7 @@ window.Tajwid = (() => {
       }
       // bentuk 1: bacaan diberikan, tebak hukumnya
       return { ...base, label:"Apa hukum bacaan huruf berwarna ini?", prompt:inst.plain, promptHtml:inst.html, slots:[info.name],
+               playStart:level === "hard" ? null : ref,
                cards:shuffle([info.name, ...wrongNames(rule, family, level, nOpt - 1)]), cardClass:"latin", lvKey:level };
     });
   }
