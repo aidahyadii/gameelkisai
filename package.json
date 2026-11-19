@@ -1,0 +1,13 @@
+{
+  "name": "ayat-battle",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ayat Battle - game hafalan/tajwid, di-deploy ke Cloudflare Workers",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}

@@ -1,0 +1,198 @@
+// Daftar surat. Teks ayat TIDAK diketik manual: diambil dari API resmi saat main.
+window.SURAHS = [
+  [1,"Al-Fatihah",7],
+  [2,"Al-Baqarah",286],
+  [3,"Ali 'Imran",200],
+  [4,"An-Nisa'",176],
+  [5,"Al-Ma'idah",120],
+  [6,"Al-An'am",165],
+  [7,"Al-A'raf",206],
+  [8,"Al-Anfal",75],
+  [9,"At-Taubah",129],
+  [10,"Yunus",109],
+  [11,"Hud",123],
+  [12,"Yusuf",111],
+  [13,"Ar-Ra'd",43],
+  [14,"Ibrahim",52],
+  [15,"Al-Hijr",99],
+  [16,"An-Nahl",128],
+  [17,"Al-Isra'",111],
+  [18,"Al-Kahf",110],
+  [19,"Maryam",98],
+  [20,"Taha",135],
+  [21,"Al-Anbiya'",112],
+  [22,"Al-Hajj",78],
+  [23,"Al-Mu'minun",118],
+  [24,"An-Nur",64],
+  [25,"Al-Furqan",77],
+  [26,"Asy-Syu'ara'",227],
+  [27,"An-Naml",93],
+  [28,"Al-Qasas",88],
+  [29,"Al-'Ankabut",69],
+  [30,"Ar-Rum",60],
+  [31,"Luqman",34],
+  [32,"As-Sajdah",30],
+  [33,"Al-Ahzab",73],
+  [34,"Saba'",54],
+  [35,"Fatir",45],
+  [36,"Yasin",83],
+  [37,"As-Saffat",182],
+  [38,"Sad",88],
+  [39,"Az-Zumar",75],
+  [40,"Gafir",85],
+  [41,"Fussilat",54],
+  [42,"Asy-Syura",53],
+  [43,"Az-Zukhruf",89],
+  [44,"Ad-Dukhan",59],
+  [45,"Al-Jasiyah",37],
+  [46,"Al-Ahqaf",35],
+  [47,"Muhammad",38],
+  [48,"Al-Fath",29],
+  [49,"Al-Hujurat",18],
+  [50,"Qaf",45],
+  [51,"Az-Zariyat",60],
+  [52,"At-Tur",49],
+  [53,"An-Najm",62],
+  [54,"Al-Qamar",55],
+  [55,"Ar-Rahman",78],
+  [56,"Al-Waqi'ah",96],
+  [57,"Al-Hadid",29],
+  [58,"Al-Mujadilah",22],
+  [59,"Al-Hasyr",24],
+  [60,"Al-Mumtahanah",13],
+  [61,"As-Saff",14],
+  [62,"Al-Jumu'ah",11],
+  [63,"Al-Munafiqun",11],
+  [64,"At-Tagabun",18],
+  [65,"At-Talaq",12],
+  [66,"At-Tahrim",12],
+  [67,"Al-Mulk",30],
+  [68,"Al-Qalam",52],
+  [69,"Al-Haqqah",52],
+  [70,"Al-Ma'arij",44],
+  [71,"Nuh",28],
+  [72,"Al-Jinn",28],
+  [73,"Al-Muzzammil",20],
+  [74,"Al-Muddassir",56],
+  [75,"Al-Qiyamah",40],
+  [76,"Al-Insan",31],
+  [77,"Al-Mursalat",50],
+  [78,"An-Naba'",40],
+  [79,"An-Nazi'at",46],
+  [80,"'Abasa",42],
+  [81,"At-Takwir",29],
+  [82,"Al-Infitar",19],
+  [83,"Al-Mutaffifin",36],
+  [84,"Al-Insyiqaq",25],
+  [85,"Al-Buruj",22],
+  [86,"At-Tariq",17],
+  [87,"Al-A'la",19],
+  [88,"Al-Ghasyiyah",26],
+  [89,"Al-Fajr",30],
+  [90,"Al-Balad",20],
+  [91,"Asy-Syams",15],
+  [92,"Al-Lail",21],
+  [93,"Ad-Duha",11],
+  [94,"Asy-Syarh",8],
+  [95,"At-Tin",8],
+  [96,"Al-'Alaq",19],
+  [97,"Al-Qadr",5],
+  [98,"Al-Bayyinah",8],
+  [99,"Az-Zalzalah",8],
+  [100,"Al-'Adiyat",11],
+  [101,"Al-Qari'ah",11],
+  [102,"At-Takatsur",8],
+  [103,"Al-'Asr",3],
+  [104,"Al-Humazah",9],
+  [105,"Al-Fil",5],
+  [106,"Quraisy",4],
+  [107,"Al-Ma'un",7],
+  [108,"Al-Kautsar",3],
+  [109,"Al-Kafirun",6],
+  [110,"An-Nasr",3],
+  [111,"Al-Lahab",5],
+  [112,"Al-Ikhlas",4],
+  [113,"Al-Falaq",5],
+  [114,"An-Nas",6]
+].map(([no,name,ayat]) => ({ no, name, ayat }));
+
+// Awal tiap juz (hanya untuk label). Isi ayat per juz diambil dari API resmi.
+window.JUZ_START = [[1, 1], [2, 142], [2, 253], [3, 93], [4, 24], [4, 148], [5, 82], [6, 111], [7, 88], [8, 41], [9, 93], [11, 6], [12, 53], [15, 1], [17, 1], [18, 75], [21, 1], [23, 1], [25, 21], [27, 56], [29, 46], [33, 31], [36, 28], [39, 32], [41, 47], [46, 1], [51, 31], [58, 1], [67, 1], [78, 1]];
+
+window.MODES = [
+  { id:"susun",    icon:"i-build", name:"Susun ayat",     desc:"Susun potongan ayat yang diacak" },
+  { id:"sambung",  icon:"i-link",  name:"Sambung ayat",   desc:"Pilih lanjutan dari awal ayat" },
+  { id:"lanjutkan",icon:"i-next",  name:"Lanjutkan ayat", desc:"Pilih ayat sesudahnya" },
+  { id:"tebak",    icon:"i-quiz",  name:"Tebak surat",    desc:"Tebak surat dari ayatnya" },
+  { id:"hijaiyah", icon:"i-hij",   name:"Hijaiyah",       desc:"Huruf, harakat, dan kata Al-Qur'an" },
+  { id:"tajwid",   icon:"i-tajwid",name:"Tajwid",         desc:"Tebak hukum bacaan dasar" },
+  { id:"acak",     icon:"i-dice",  name:"Acak",           desc:"Campuran semua jenis soal ayat dan tajwid" }
+];
+
+// Materi tajwid dasar
+window.TAJ_MATERI = [
+  { id:"nun",     icon:"i-tajwid", name:"Nun sukun & tanwin", desc:"Izhar, idgham, iqlab, ikhfa" },
+  { id:"mim",     icon:"i-tajwid", name:"Mim sukun",          desc:"Ikhfa syafawi, idgham mimi, izhar syafawi" },
+  { id:"tasydid", icon:"i-tajwid", name:"Tasydid",            desc:"Nun dan mim bertasydid (ghunnah)" },
+  { id:"mad",     icon:"i-tajwid", name:"Mad",                desc:"Thabi'i, muttasil, munfasil, 'aridh lissukun" },
+  { id:"sejenis", icon:"i-tajwid", name:"Idgham sejenis",     desc:"Mutamatsilain, mutajanisain, mutaqaribain" },
+  { id:"lam",     icon:"i-tajwid", name:"Alif Lam",           desc:"Qamariyah (izhar) dan syamsiyah (idgham)" },
+  { id:"campur",  icon:"i-tajwid", name:"Campuran",           desc:"Semua hukum di atas" }
+];
+
+// Materi hijaiyah (tahapan umum belajar membaca Al-Qur'an)
+window.MATERI = [
+  { id:"huruf",   icon:"i-hij",   name:"Huruf satuan",  desc:"Kenali bentuk dan nama huruf" },
+  { id:"sambung", icon:"i-link",  name:"Huruf sambung", desc:"Huruf di awal, tengah, akhir kata" },
+  { id:"harakat", icon:"i-quiz",  name:"Berharakat",    desc:"Fathah, kasrah, dhammah, tanwin" },
+  { id:"kata",    icon:"i-build", name:"Kata Al-Qur'an",desc:"Dengar dan baca kata dari Al-Qur'an" },
+  { id:"pecah",   icon:"i-link",  name:"Pecah & rangkai", desc:"Kata dipecah jadi huruf, huruf dirangkai jadi kata" },
+  { id:"pasang",  icon:"i-mic",   name:"Pasang harakat", desc:"Dengarkan, lalu pasang harakatnya" }
+];
+window.TAHAP = [
+  { id:1, name:"Tahap 1: harakat (fathah, kasrah, dhammah)" },
+  { id:2, name:"Tahap 2: + tanwin" },
+  { id:3, name:"Tahap 3: + bacaan panjang (mad)" },
+  { id:4, name:"Tahap 4: + sukun dan alif lam" },
+  { id:5, name:"Tahap 5: + tasydid, semua bacaan" }
+];
+
+// [huruf, nama, bunyi konsonan, tebal, menyambung ke kiri]
+window.HIJAIYAH = [
+  ["ا","Alif","",0,0],["ب","Ba","b",0,1],["ت","Ta","t",0,1],["ث","Tsa","ts",0,1],["ج","Jim","j",0,1],
+  ["ح","Ḥa","ḥ",0,1],["خ","Kho","kh",1,1],["د","Dal","d",0,0],["ذ","Dzal","dz",0,0],["ر","Ro","r",1,0],
+  ["ز","Za","z",0,0],["س","Sin","s",0,1],["ش","Syin","sy",0,1],["ص","Shod","sh",1,1],["ض","Dhod","dh",1,1],
+  ["ط","Tho","th",1,1],["ظ","Zho","zh",1,1],["ع","'Ain","'",0,1],["غ","Ghoin","gh",1,1],["ف","Fa","f",0,1],
+  ["ق","Qof","q",1,1],["ك","Kaf","k",0,1],["ل","Lam","l",0,1],["م","Mim","m",0,1],["ن","Nun","n",0,1],
+  ["و","Wau","w",0,0],["ه","Ha","h",0,1],["ء","Hamzah","'",0,0],["ي","Ya","y",0,1]
+].map(([ch, name, c, heavy, joins]) => ({ ch, name, c, heavy:!!heavy, joins:!!joins }));
+// huruf yang bentuknya mirip, beda titik (untuk level sulit)
+window.HIJ_MIRIP = [["ب","ت","ث","ن","ي"],["ج","ح","خ"],["د","ذ"],["ر","ز"],["س","ش"],["ص","ض"],["ط","ظ"],["ع","غ"],["ف","ق"]];
+
+window.CONTROLS = [
+  { id:"pinch", icon:"i-pinch", name:"Jepit",  desc:"Pakai kamera, jepit dan seret" },
+  { id:"shoot", icon:"i-aim",   name:"Tembak", desc:"Pakai kamera, bidik dan tembak" },
+  { id:"touch", icon:"i-tap",   name:"Sentuh", desc:"Tanpa kamera, ketuk kartu" },
+  { id:"voice", icon:"i-mic",   name:"Suara",  desc:"Jawab dengan membaca ayat" },
+  { id:"write", icon:"i-pen",   name:"Tulis",  desc:"Tulis hurufnya di layar" }
+];
+
+window.LEVELS = {
+  easy:   { name:"Mudah",  desc:"2 pilihan, potongan besar, ayat dibacakan" },
+  medium: { name:"Sedang", desc:"3 pilihan, ayat dibacakan" },
+  hard:   { name:"Sulit",  desc:"4 pilihan mirip (mutasyabihat), ada kartu jebakan, tanpa audio otomatis" }
+};
+
+// Folder audio per ayat di everyayah.com
+window.QARIS = [
+  { id:"Husary_128kbps",          name:"Mahmud Khalil Al-Husary" },
+  { id:"Alafasy_128kbps",         name:"Mishary Rashid Alafasy" },
+  { id:"Minshawy_Mujawwad_192kbps", name:"Muhammad Siddiq Al-Minshawi" },
+  { id:"Abdul_Basit_Murattal_192kbps", name:"Abdul Basit (murattal)" }
+];
+
+window.PLAY_TITLES = {
+  "solo": "Main sendiri",
+  "duel-local": "Duel satu layar",
+  "duel-online": "Duel online"
+};
