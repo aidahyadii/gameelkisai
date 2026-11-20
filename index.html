@@ -177,6 +177,29 @@
     </div>
   </section>
 
+  <!-- FLASHCARD -->
+  <section class="screen" id="flash">
+    <header class="bar">
+      <button class="round sm" data-go="setup" aria-label="Kembali"><svg viewBox="0 0 24 24"><use href="#i-back"/></svg></button>
+      <h2 class="board">Flashcard huruf</h2>
+      <span class="spacer"></span>
+    </header>
+    <div class="flash-wrap">
+      <p class="flash-count" id="flashCount"></p>
+      <div class="flashcard" id="flashCard" role="button" tabindex="0" aria-label="Balik kartu">
+        <div class="face front"><span class="ch" id="flashCh"></span><small>Ketuk untuk balik</small></div>
+        <div class="face back"><span class="nm" id="flashName"></span><small id="flashTr"></small></div>
+      </div>
+      <div class="flash-actions" id="flashActions">
+        <button class="plank stone" id="flashSound">Dengar</button>
+        <button class="plank red" id="flashAgain">Belum</button>
+        <button class="plank moss" id="flashKnow">Sudah hafal</button>
+      </div>
+      <p class="hint" id="flashDone"></p>
+      <div class="start-wrap"><button class="plank wood" id="flashReset" hidden>Mulai lagi</button></div>
+    </div>
+  </section>
+
   <!-- HOWTO -->
   <section class="screen" id="howto">
     <header class="bar">
@@ -403,6 +426,7 @@
 <script src="snip.js"></script>
 <script src="arena.js"></script>
 <script src="online.js"></script>
+<script src="flashcards.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

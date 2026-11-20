@@ -39,6 +39,7 @@
   document.addEventListener("pointerdown", () => bgmSync(), { once:true });
   function go(id){
     current = id; bgmSync();
+    if (id !== "flash") window.Flash?.stop();
     $$(".screen").forEach(s => s.classList.toggle("active", s.id === id));
     window.scrollTo(0,0);
   }
@@ -149,6 +150,7 @@
   });
   $("#btnStart").onclick = () => {
     if (S.play === "duel-online"){ openLobby(); return; }
+    if (S.mode === "hijaiyah" && S.materi === "flash"){ go("flash"); Flash.start({ sound:S.sound }); return; }
     go("arena"); Arena.start(gameOpts());
   };
 
