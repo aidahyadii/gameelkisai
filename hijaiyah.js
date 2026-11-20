@@ -139,6 +139,18 @@ window.Hijaiyah = (() => {
       return qs;
     }
 
+    // flashcard: bunyi nama huruf diputar di awal soal (tanpa audio setelah jawab)
+    if (o.materi === "flash"){
+      const pool = Fresh.pick(HIJAIYAH, h => h.ch, rounds, "hij:flash");
+      return pool.slice(0, rounds).map((h, i) => i % 2 === 0
+        ? { label:"Flashcard: lihat hurufnya, ingat namanya", prompt:h.ch, promptClass:"big-hij", slots:[h.name],
+            cards:shuffle([h.name, ...wrongLetters(h.ch, level).map(c => byCh(c).name)]), cardClass:"latin",
+            playStart:rec(rid(h)), hint:rec(rid(h)), reveal:h.name }
+        : { label:"Flashcard: dengar namanya, cari hurufnya", prompt:h.name, promptClass:"big-latin", slots:[h.ch],
+            cards:shuffle([h.ch, ...wrongLetters(h.ch, level)]), cardClass:"letter",
+            playStart:rec(rid(h)), hint:rec(rid(h)), reveal:h.name });
+    }
+
     if (o.materi === "sambung"){
       const items = Fresh.pick(HIJAIYAH.flatMap(h => forms(h).map(f => ({ h, ...f }))), it => it.h.ch + it.txt, rounds, "hij:sambung");
       for (let i = 0; i < rounds; i++){

@@ -143,6 +143,7 @@ window.TAJ_MATERI = [
 // Materi hijaiyah (tahapan umum belajar membaca Al-Qur'an)
 window.MATERI = [
   { id:"huruf",   icon:"i-hij",   name:"Huruf satuan",  desc:"Kenali bentuk dan nama huruf" },
+  { id:"flash",   icon:"i-quiz",  name:"Flashcard",     desc:"Lihat huruf, dengar namanya, lalu ingat" },
   { id:"sambung", icon:"i-link",  name:"Huruf sambung", desc:"Huruf di awal, tengah, akhir kata" },
   { id:"harakat", icon:"i-quiz",  name:"Berharakat",    desc:"Fathah, kasrah, dhammah, tanwin" },
   { id:"kata",    icon:"i-build", name:"Kata Al-Qur'an",desc:"Dengar dan baca kata dari Al-Qur'an" },

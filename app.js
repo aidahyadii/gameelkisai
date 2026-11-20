@@ -118,7 +118,7 @@
   $("#tahapSel").innerHTML = TAHAP.map(t => `<option value="${t.id}">${t.name}</option>`).join("");
   $("#tahapSel").value = S.tahap;
   $("#tahapSel").onchange = e => { S.tahap = +e.target.value; save(); };
-  const hijNoPick = () => S.mode === "hijaiyah" && ["huruf", "sambung", "harakat"].includes(S.materi);
+  const hijNoPick = () => S.mode === "hijaiyah" && ["huruf", "sambung", "harakat", "flash"].includes(S.materi);
   optionGroup($("#ctrlOpts"), CONTROLS, "control");
 
   // ---------- VALIDATION ----------
